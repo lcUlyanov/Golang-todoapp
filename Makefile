@@ -15,7 +15,7 @@ env-cleanup:
 	set /p confirm= && \
 	if "!confirm!"=="y" ( \
 		docker compose down todoapp-postgres port-forwarder && \
-		if exist out\pgdata rmdir /S /Q out\pgdata && \
+		if exist $(PROJECT_ROOT)\out\pgdata rmdir /S /Q $(PROJECT_ROOT)\out\pgdata && \
 		echo Database volume cleaned up. \
 	) else ( \
 		echo Cleanup cancelled. \
@@ -54,4 +54,4 @@ todoapp-run:
 	@go mod tidy
 	@set LOGGER_FOLDER=$(PROJECT_ROOT)/out/logs&& \
 	set POSTGRES_HOST=localhost&& \
-	go run cmd/todoapp/main.go
+	go run $(PROJECT_ROOT)/cmd/todoapp/main.go

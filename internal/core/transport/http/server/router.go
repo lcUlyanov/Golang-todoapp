@@ -27,14 +27,12 @@ func NewAPIVersionRouter(
 }
 
 func (r *APIVersionRouter) RegisterRoutes(routes ...Route) {
-	// Group routes by pattern
 	routesByPattern := make(map[string][]Route)
 	for _, route := range routes {
 		pattern := "/" + string(r.apiVersion) + route.Path
 		routesByPattern[pattern] = append(routesByPattern[pattern], route)
 	}
 
-	// Register each pattern once with a handler that checks the method
 	for pattern, patternRoutes := range routesByPattern {
 		r.HandleFunc(pattern, func(w http.ResponseWriter, req *http.Request) {
 			for _, route := range patternRoutes {
